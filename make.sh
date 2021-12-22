@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-set -ue
+set -ueo pipefail
 rundir=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)")
 cd "$rundir"
 
-# Custom run:
+# {make.sh user}
 
 CONTAINER_NAME="aws-api-cli"
 IMAGE_NAME="${CONTAINER_NAME}"
@@ -11,7 +11,7 @@ IMAGE_REPO="me/${IMAGE_NAME}"
 IMAGE_TAG="latest"
 
 run:nodemon () {
-  nodemon -x "docker stop "${CONTAINER_NAME}";
+  nodemon -x "docker stop \"${CONTAINER_NAME}\";
    ./make.sh build \
    && ./make.sh docker"
 }
@@ -29,33 +29,23 @@ run:docker () {
    "$@"
 }
 
-run:whatever(){
-  DATE=$(date +%Y%m%d)
-  echo $DATE
-}
-
 run:whatever:seconds(){
   DATE=$(date +%s)
-  echo $DATE
+  echo "$DATE" "$@"
 }
 
 
-# Common run:
+# {make.sh common}
 
 run:help(){
   set +x
   echo "Commands:"
   declare -F | awk '/^declare -f run:/ { printf("  %s\n", substr($0,16)); }'
+  exit 1
 }
-
-if [ -n "${1:-}" ]; then
-  cmd=$1
-  shift
-else
-  cmd=help
-fi
-
+[ -z "${1:-}" ] && run:help
+cmd=$1
+shift
 set -x
-
-run:$cmd "$@"
+run:"$cmd" "$@"
 

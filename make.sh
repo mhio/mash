@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -ueo pipefail
+dateTime(){ date -u '+%Y-%m-%dT%H:%M:%SZ'; }
 rundir=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)")
 cd "$rundir"
 
@@ -10,14 +11,35 @@ IMAGE_NAME="${CONTAINER_NAME}"
 IMAGE_REPO="me/${IMAGE_NAME}"
 IMAGE_TAG="latest"
 
-run:nodemon () {
-  nodemon -x "docker stop \"${CONTAINER_NAME}\";
-   ./make.sh build \
-   && ./make.sh docker"
+run:header () {
+  awk 'BEGIN {
+    exit_code = 1
+  }
+  {
+    print $0
+    if ( $0 ~ /^# \{make\.sh user\}/ ) {
+      exit_code = 0;
+      exit 0;
+    }
+  }
+  END {
+    if ( exit_code != 0 ) print "ERROR: No make.sh \"user\" mark";
+    exit exit_code;
+  }' make.sh
 }
 
-run:build () {
-  docker build --tag "${IMAGE_REPO}:${IMAGE_TAG}" .
+run:footer () {
+  awk 'BEGIN {
+    wait = 1
+  }
+  {
+    if ( $0 ~ /^# \{make\.sh common\}/ ) wait = 0;
+    if ( wait == 0 ) print $0;
+  }
+  END {
+    if ( wait == 1) print "ERROR: No make.sh \"common\" mark";
+    exit wait;
+  }' make.sh
 }
 
 run:docker () {

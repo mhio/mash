@@ -11,7 +11,32 @@ IMAGE_NAME="${CONTAINER_NAME}"
 IMAGE_REPO="me/${IMAGE_NAME}"
 IMAGE_TAG="latest"
 
+# Examples
+
+run:watch () {
+  nodemon -e sh,ts,json -i .git -x "$@"
+} 
+
+run:docker () {
+  docker run --tty \
+   --env DEBUG=true \
+   --rm \
+   --name "${CONTAINER_NAME}" \
+   "${IMAGE_REPO}:${IMAGE_TAG}" \
+   "$@"
+}
+
+run:whatever:seconds(){
+  DATE=$(date +%s)
+  echo "$DATE" "$@"
+}
+
+
+# Project
+
+# dump just the header
 run:header () {
+  set +x #output based
   awk 'BEGIN {
     exit_code = 1
   }
@@ -28,7 +53,9 @@ run:header () {
   }' make.sh
 }
 
+# dump just the footer
 run:footer () {
+  set +x # output based
   awk 'BEGIN {
     wait = 1
   }
@@ -42,19 +69,6 @@ run:footer () {
   }' make.sh
 }
 
-run:docker () {
-  docker run --tty \
-   --env DEBUG=true \
-   --rm \
-   --name "${CONTAINER_NAME}" \
-   "${IMAGE_REPO}:${IMAGE_TAG}" \
-   "$@"
-}
-
-run:whatever:seconds(){
-  DATE=$(date +%s)
-  echo "$DATE" "$@"
-}
 
 
 # {make.sh common}

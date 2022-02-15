@@ -1,7 +1,7 @@
-makesh
+make.sh
 _______
 
-A simple shell task manager to avoid `make`. Define functions in bash with the name `run:x` and run
+A simple bash task runner to avoid `make`. Define functions in bash with the name `run:x` and run
 
 ```
 run:task:name () {
@@ -9,7 +9,8 @@ run:task:name () {
 }
 ```
 
-    ./make.sh task:name  #runs `run:task:name`
+    $ ./make.sh task:name  #runs `run:task:name`
+    I am name
 
 
 List commands
@@ -17,6 +18,8 @@ List commands
     ./make.sh
     # or
     ./make.sh help
+    Commands:
+      task:name
 
 MIT license
 

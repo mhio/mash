@@ -3,22 +3,33 @@ set -ueo pipefail
 dateTime(){ date -u '+%Y-%m-%dT%H:%M:%SZ'; }
 rundir=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)")
 cd "$rundir"
-
 # {make.sh user}
 
-CONTAINER_NAME="aws-api-cli"
+CONTAINER_NAME="debian"
 IMAGE_NAME="${CONTAINER_NAME}"
-IMAGE_REPO="me/${IMAGE_NAME}"
-IMAGE_TAG="latest"
+IMAGE_REPO="docker.io/${IMAGE_NAME}"
+IMAGE_TAG="11"
+
 
 # Examples
+
+run:task:name () {
+  echo "I am name"
+}
+run:other(){
+  printf "I'm %s\n" "$*"
+}
+
+
+# Common
 
 run:watch () {
   nodemon -e sh,ts,json -i .git -x "$@"
 } 
 
 run:docker () {
-  docker run --tty \
+  docker run \
+   --interactive --tty \
    --env DEBUG=true \
    --rm \
    --name "${CONTAINER_NAME}" \
@@ -77,16 +88,17 @@ run:dump(){
 
 
 # {make.sh common}
-
+run:completion:words(){
+  declare -F | awk '/^declare -f run:/ { if (/run:completion:/) { next; }; printf("%s\n", substr($0,16)); }'
+}
 run:help(){
   set +x
   echo "Commands:"
-  declare -F | awk '/^declare -f run:/ { printf("  %s\n", substr($0,16)); }'
+  run:completion:words | awk '{ printf("  %s\n", $0); }'
   exit 1
 }
 [ -z "${1:-}" ] && run:help
 cmd=$1
 shift
-set -x
+[[ "$cmd" == completion:* ]] || set -x
 run:"$cmd" "$@"
-

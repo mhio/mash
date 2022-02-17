@@ -1,26 +1,32 @@
-make.sh
+mash - makish bash
 _______
 
-A simple bash task runner to avoid `make`. Define functions in bash with the name `run:x` and run
+A simple bash task runner to avoid makefiles. Define functions in bash with the name `run:x` and run
 
 ```
 run:task:name () {
   echo "I am name"
 }
 run:other(){
-  printf "I'm %s" "$*"
+  printf "I'm %s\n" "$*"
 }
 ```
 
-    $ ./make.sh task:name  #runs `run:task:name`
+    $ ./mash task:name  #runs `run:task:name`
     I am name
 
+    $ ./mash other a bunch of things  #runs `run:other`
+    I'm a bunch of things
+
+    $ ./mash completion:words
+    task:name
+    other
 
 List commands
 
-    $ ./make.sh
+    $ ./mash
     # or
-    $ ./make.sh help
+    $ ./mash help
     Commands:
       task:name
       other

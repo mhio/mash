@@ -44,7 +44,7 @@ run:header () {
     print $0
     if ( $0 ~ /^# \{make\.sh user\}/ ) {
       exit_code = 0;
-      exit 0;
+      exit;
     }
   }
   END {
@@ -69,6 +69,11 @@ run:footer () {
   }' make.sh
 }
 
+run:dump(){
+  run:header
+  echo 
+  run:footer
+}
 
 
 # {make.sh common}

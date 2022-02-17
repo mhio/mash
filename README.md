@@ -18,9 +18,9 @@ run:other(){
 
 List commands
 
-    ./make.sh
+    $ ./make.sh
     # or
-    ./make.sh help
+    $ ./make.sh help
     Commands:
       task:name
       other

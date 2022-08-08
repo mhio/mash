@@ -59,9 +59,9 @@ run:header () {
     }
   }
   END {
-    if ( exit_code != 0 ) print "ERROR: No make.sh \"user\" mark";
+    if ( exit_code != 0 ) print "ERROR: No mash \"user\" mark";
     exit exit_code;
-  }' make.sh
+  }' mash
 }
 
 # dump just the footer
@@ -75,9 +75,9 @@ run:footer () {
     if ( wait == 0 ) print $0;
   }
   END {
-    if ( wait == 1) print "ERROR: No make.sh \"common\" mark";
+    if ( wait == 1) print "ERROR: No mash \"common\" mark";
     exit wait;
-  }' make.sh
+  }' mash
 }
 
 run:dump(){

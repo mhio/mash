@@ -48,36 +48,13 @@ run:whatever:seconds(){
 # dump just the header
 run:header () {
   set +x #output based
-  awk 'BEGIN {
-    exit_code = 1
-  }
-  {
-    print $0
-    if ( $0 ~ /^# \{make\.sh user\}/ ) {
-      exit_code = 0;
-      exit;
-    }
-  }
-  END {
-    if ( exit_code != 0 ) print "ERROR: No mash \"user\" mark";
-    exit exit_code;
-  }' mash
+  grep -B200 -e '{make\.sh user}' mash
 }
 
 # dump just the footer
 run:footer () {
   set +x # output based
-  awk 'BEGIN {
-    wait = 1
-  }
-  {
-    if ( $0 ~ /^# \{make\.sh common\}/ ) wait = 0;
-    if ( wait == 0 ) print $0;
-  }
-  END {
-    if ( wait == 1) print "ERROR: No mash \"common\" mark";
-    exit wait;
-  }' mash
+  grep -A200 -e '{make\.sh common}' mash
 }
 
 run:dump(){

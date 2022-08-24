@@ -24,7 +24,7 @@ run:other(){
 # Common
 
 run:watch () {
-  nodemon -e sh,ts,json -i .git -x "$@"
+  nodemon -w mash -w . -e sh,ts,json -i .git -x "$@"
 } 
 
 run:docker () {
@@ -66,12 +66,14 @@ run:dump(){
 
 # {make.sh common}
 run:completion:words(){
-  declare -F | awk '/^declare -f run:/ { if (/run:completion:/) { next; }; printf("%s\n", substr($0,16)); }'
+  declare -F | while read -r line; do
+    [[ "${line:11:4}" = "run:" ]] && [[ "${line:11:15}" != "run:completion:" ]] && echo "${line:15}"
+  done
 }
 run:help(){
   set +x
   echo "Commands:"
-  run:completion:words | awk '{ printf("  %s\n", $0); }'
+  run:completion:words | while read -r line; do printf "  %s\n" "${line}"; done
   exit 1
 }
 [ -z "${1:-}" ] && run:help

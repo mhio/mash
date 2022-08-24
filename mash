@@ -48,13 +48,13 @@ run:whatever:seconds(){
 # dump just the header
 run:header () {
   set +x #output based
-  grep -B200 -e '{make\.sh user}' mash
+  grep -B100 -e '{make\.sh user}' mash
 }
 
 # dump just the footer
 run:footer () {
   set +x # output based
-  grep -A200 -e '{make\.sh common}' mash
+  grep -A100 -e '{make\.sh common}' mash
 }
 
 run:dump(){

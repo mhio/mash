@@ -49,13 +49,13 @@ run:whatever:seconds(){
 # dump just the header
 run:mash:header () {
   set +x #output based
-  grep -B100 -e '{make\.sh user}' mash
+  grep -B100 -e '{make\.sh user}' mash || (printf "ERROR" >/dev/stderr; exit 1)
 }
 
 # dump just the footer
 run:mash:footer () {
   set +x # output based
-  grep -A100 -e '{make\.sh common}' mash
+  grep -A100 -e '{make\.sh common}' mash || (printf "ERROR" >dev/stderr; exit 1)
 }
 
 run:mash:dump(){

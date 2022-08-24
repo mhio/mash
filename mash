@@ -5,6 +5,7 @@ rundir=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)")
 cd "$rundir"
 # {make.sh user}
 
+
 CONTAINER_NAME="debian"
 IMAGE_NAME="${CONTAINER_NAME}"
 IMAGE_REPO="docker.io/${IMAGE_NAME}"
@@ -46,28 +47,31 @@ run:whatever:seconds(){
 # Project
 
 # dump just the header
-run:header () {
+run:mash:header () {
   set +x #output based
   grep -B100 -e '{make\.sh user}' mash
 }
 
 # dump just the footer
-run:footer () {
+run:mash:footer () {
   set +x # output based
   grep -A100 -e '{make\.sh common}' mash
 }
 
-run:dump(){
-  run:header
+run:mash:dump(){
+  run:mash:header
   echo 
-  run:footer
+  run:mash:footer
+}
+run:dump(){
+  run:mash:dump
 }
 
 
 # {make.sh common}
 run:completion:words(){
   declare -F | while read -r line; do
-    [[ "${line:11:4}" = "run:" ]] && [[ "${line:11:15}" != "run:completion:" ]] && echo "${line:15}"
+    [[ "${line:11:4}" == "run:" ]] && [[ "${line:11:15}" != "run:completion:" ]] && echo "${line:15}"
   done
 }
 run:help(){

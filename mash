@@ -71,7 +71,7 @@ run:dump(){
 # {make.sh common}
 run:completion:words(){
   declare -F | while read -r line; do
-    [[ "${line:11:4}" == "run:" ]] && [[ "${line:11:15}" != "run:completion:" ]] && echo "${line:15}"
+    [ "${line:11:4}" = "run:" ] && [ "${line:11:15}" != "run:completion:" ] && echo "${line:15}"
   done
 }
 run:help(){
@@ -81,7 +81,7 @@ run:help(){
   exit 1
 }
 [ -z "${1:-}" ] && run:help
-cmd=$1
+cmd="$1"
 shift
 [[ "$cmd" == completion:* ]] || set -x
 run:"$cmd" "$@"

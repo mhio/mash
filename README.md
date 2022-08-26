@@ -42,9 +42,11 @@ zsh completions `_mash` in `$fpath`
 
 ```
 #compdef mash
-# Not this only works in the directory: `./mash`
-args=( $(./mash completion:words) )
-_arguments '*: :(${args})'
+
+local context state state_descr line
+tasks=( $(_call_program completion:words $words[1] completion:words) )
+_arguments "1:task:($tasks)" \
+           "*:arg:->args"
 ```
 
 POSIX `sh` doesn't guarentee a function with `:` works, even though it does for most implementations so it's bash for the moment

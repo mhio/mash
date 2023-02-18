@@ -1,7 +1,8 @@
 ### mash
-_______
 
 A simple make-ish task runner in bash to avoid makefiles. Nothing fancy.
+
+_______
 
 Define functions in bash with the name `run:x` and then execute with `./mash x`
 

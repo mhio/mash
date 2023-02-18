@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -ueo pipefail
+dateTime(){ date -u '+%Y-%m-%dT%H:%M:%SZ'; }
+rundir=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)")
+cd "$rundir"
+# {make.sh user} v1.0.0
+
+# {make.sh common} v1.0.0
+run:completion:words(){
+  declare -F | while read -r line; do
+    [ "${line:11:4}" = "run:" ] && [ "${line:11:15}" != "run:completion:" ] && echo "${line:15}"
+  done
+}
+run:help(){
+  set +x
+  echo "Commands:"
+  run:completion:words | while read -r line; do printf "  %s\n" "${line}"; done
+  exit 1
+}
+[ -z "${1:-}" ] && run:help
+[ "${1:11}" = "completion:" ] || set -x
+run:"$1" "${@:2}"
+

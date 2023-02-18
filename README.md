@@ -1,4 +1,4 @@
-mash - make-ish bash
+### mash -  a make-ish bash script
 _______
 
 A simple bash task runner to avoid makefiles. Nothing fancy.
@@ -20,15 +20,19 @@ run:other(){
     $ ./mash other a bunch of things  #runs `run:other`
     I'm a bunch of things
 
+### Setup
+
 The `mash` scripts header and footer can be printed with the `dump` task to initialize a new file
 
-    $ /path/to/make.sh/mash dump > ~/myrepo/mash
+    $ ~/repos/make.sh/mash dump > ~/myrepo/mash
     $ chmod 755 my/mash
 
 List commands
 
     $ ./mash
-    # or
+
+ or
+
     $ ./mash help
     Commands:
       task:name

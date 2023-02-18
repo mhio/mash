@@ -57,8 +57,8 @@ _arguments "1:task:($tasks)" \
 
 ### `sh` or `bash`
 
-POSIX `sh` doesn't guarentee a function named with a `:` works, even though it does work for most implementations, we
-use `bash` for the moment so some simpler `${var:1:2}` substring indexing has crept in
+POSIX `sh` doesn't guarentee a function named with a `:` works, even though it does work for most
+ implementations. `bash` also allows for much simpler `${var:1:2}` substring indexing.
 
 MIT license
 

@@ -12,7 +12,7 @@ IMAGE_REPO="docker.io/${IMAGE_NAME}"
 IMAGE_TAG="11"
 
 
-# Examples
+# ## Examples
 
 run:task:name () {
   echo "I am name"
@@ -22,7 +22,7 @@ run:other(){
 }
 
 
-# Common
+# ## Common
 
 run:watch () {
   nodemon -w mash -w . -e sh,ts,json -i .git -x "$@"
@@ -44,7 +44,7 @@ run:whatever:seconds(){
 }
 
 
-# Project
+# ## Project
 
 # dump just the header
 run:mash:header () {
@@ -72,6 +72,12 @@ run:test(){
   run:dump | tail -n 2 | grep 'run:'
   run:test:args 1 2 3 | grep "1 2 3"
   echo "completed tests succesfully"
+}
+
+run:build(){
+  cd "${rundir}"
+  run:dump > mash.blank
+  chmod 755 mash.blank
 }
 
 run:test:args(){

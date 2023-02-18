@@ -1,4 +1,6 @@
-### mash -  a make-ish bash script
+### mash
+
+A make-ish bash script
 _______
 
 A simple bash task runner to avoid makefiles. Nothing fancy.

@@ -27,7 +27,13 @@ The `mash` scripts header and footer can be printed with the `dump` task to init
     $ ~/repos/make.sh/mash dump > ~/myrepo/mash
     $ chmod 755 my/mash
 
-List commands
+Or all in one
+    
+    ./mash dump:to ~/myrepo/mash
+
+### Tasks
+
+List tasks
 
     $ ./mash
 

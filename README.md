@@ -20,9 +20,9 @@ run:other(){
     $ ./mash other a bunch of things  #runs `run:other`
     I'm a bunch of things
 
-The mash script headers/footer can be printed with the `dump` to initialize a new file
+The `mash` scripts header and footer can be printed with the `dump` task to initialize a new file
 
-    $ /path/to/default/mash dump > ~/myrepo/mash
+    $ /path/to/make.sh/mash dump > ~/myrepo/mash
     $ chmod 755 my/mash
 
 List commands

@@ -74,10 +74,10 @@ run:test(){
   echo "completed tests succesfully"
 }
 
-run:build(){
-  cd "${rundir}"
-  run:dump > mash.blank
-  chmod 755 mash.blank
+run:dump:to(){
+  [ -f "$1" ] && (printf "ERROR cowardly refusing to clobber file [%s]\n" "$1"; return 1)
+  run:dump > "$1"
+  chmod 755 "$1"
 }
 
 run:test:args(){

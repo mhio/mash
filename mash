@@ -50,13 +50,13 @@ run:whatever:seconds(){
 # dump just the header
 run:mash:header () {
   set +x #output based
-  grep -B150 -e '{make\.sh user}' mash || (printf "ERROR generating mash header\n" >/dev/stderr; return 1)
+  grep -B150 -e '{make\.sh user}' mash || (printf "ERROR generating mash header\n" 1>&2; return 1)
 }
 
 # dump just the footer
 run:mash:footer () {
   set +x # output based
-  grep -A150 -e '{make\.sh common}' mash || (printf "ERROR generating mash footer\n" >/dev/stderr; return 1)
+  grep -A150 -e '{make\.sh common}' mash || (printf "ERROR generating mash footer\n" 1>&2; return 1)
 }
 
 run:mash:dump(){

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -ueo pipefail
 dateTime(){ date -u '+%Y-%m-%dT%H:%M:%SZ'; }
+runpwd=$(pwd -P)
 rundir=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)")
 cd "$rundir"
 # {make.sh user} v1.0.0

@@ -62,6 +62,27 @@ _arguments "1:task:($tasks)" \
            "*:arg:->args"
 ```
 
+bash completion `/etc/bash_completion.d/mash`
+```
+_mash()
+{
+  #pwd
+  #echo "0:$0 1:$1"
+  _script_commands=$($1 completion:words)
+
+  local cur
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  COMPREPLY=( $(compgen -W "${_script_commands}" -- ${cur}) )
+
+  return 0
+}
+# no space after
+#complete -o nospace -F _mash ./mash.sh
+complete -F _mash mash
+```
+
+
 ### `sh` or `bash`
 
 POSIX `sh` doesn't guarentee a function named with a `:` works, even though it does work for most

@@ -1,0 +1,28 @@
+#!/bin/sh
+(set -o pipefail >/dev/null 2>&1) && set -o pipefail
+set -ue
+dateTime(){ date -u '+%Y-%m-%dT%H:%M:%SZ'; }
+runpwd=$(pwd -P)
+rundir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+cd "$rundir"
+# {kash user} v1.0.0
+
+
+run_test_all(){
+  yarn test:coverage --run
+  yarn test:lint
+  yarn test:build
+}
+
+
+# {kash common} v1.0.0
+replaceChar(){
+    str="$1"; r=""; while [ -n "$str" ]; do
+      sfx="${str#?}"; c="${str%"${sfx}"}"; [ "$c" = "$2" ] && r="$r$3" || r="$r$c"; str="$sfx"; done
+    printf '%s\n' "$r"
+}
+
+cmd="$(replaceChar "$1" ':' '_')"
+shift
+set -x
+run_"$cmd" "$@"
